@@ -8,7 +8,7 @@ services:
      - portainer-network
     environment:
      - TO_EMAIL=${TO_EMAIL}
-     - NODENAME=node2
+     - NODENAME=node2-test
 
   smtp:
     image: juanluisbaptiste/postfix:latest
