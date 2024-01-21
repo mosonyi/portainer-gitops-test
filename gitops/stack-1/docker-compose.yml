@@ -7,7 +7,7 @@ services:
     networks:
      - portainer-network
     environment:
-     - TO_EMAIL=$TO_EMAIL
+     - TO_EMAIL=${TO_EMAIL}
      - NODENAME=node1
 
   smtp:
@@ -16,10 +16,10 @@ services:
     networks:
      - portainer-network
     environment:
-      - SMTP_SERVER=$SMTP_SERVER
-      - SMTP_USERNAME=$SMTP_USERNAME
-      - SMTP_PASSWORD=$SMTP_PASSWORD
-      - SERVER_HOSTNAME=$SERVER_HOSTNAME
+      - SMTP_SERVER=${SMTP_SERVER}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SERVER_HOSTNAME=${SERVER_HOSTNAME}
       - LOG_SUBJECT=true
 
 networks:
