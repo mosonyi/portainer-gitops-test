@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+
+  node:
+    image: mosonyi/portainer-gitops-test:dev
+    restart: always
+    networks:
+     - portainer-network
+    environment:
+     - TO_EMAIL=$TO_EMAIL
+     - NODENAME=node2
+
+  smtp:
+    image: juanluisbaptiste/postfix:latest
+    restart: always
+    networks:
+     - portainer-network
+    environment:
+      - SMTP_SERVER=$SMTP_SERVER
+      - SMTP_USERNAME=$SMTP_USERNAME
+      - SMTP_PASSWORD=$SMTP_PASSWORD
+      - SERVER_HOSTNAME=$SERVER_HOSTNAME
+      - LOG_SUBJECT=true
+
+networks:
+  portainer-network:
+    driver: overlay
