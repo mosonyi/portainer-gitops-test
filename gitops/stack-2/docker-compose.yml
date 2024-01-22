@@ -9,6 +9,11 @@ services:
     environment:
      - TO_EMAIL=${TO_EMAIL}
      - NODENAME=node2
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.node01 == true
 
   smtp:
     image: juanluisbaptiste/postfix:latest
