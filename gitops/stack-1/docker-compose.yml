@@ -51,15 +51,20 @@ services:
 
 configs:
   to_email_config:
-    external: true
+    external: 
+      name: to_email_config
   smtp_server_config:
-    external: true
+    external: 
+      name: smtp_server_config
   smtp_user_config:
-    external: true
+    external: 
+      name: smtp_user_config
   server_hostname_config:
-    external: true
+    external: 
+      name: server_hostname_config
   smtp_password_secret:
-    external: true
+    external: 
+      name: smtp_password_secret
 
 networks:
   portainer-network:
