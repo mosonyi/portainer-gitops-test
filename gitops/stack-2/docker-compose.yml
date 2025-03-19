@@ -35,16 +35,18 @@ services:
         target: /run/configs/smtp_user_config
       - source: server_hostname_config
         target: /run/configs/server_hostname_config
+      - source: smtp_password_secret
+        target: /run/configs/smtp_password_secret
     secrets:
       - smtp_password_secret
     entrypoint:
       - "/bin/sh"
       - "-c"
       - |
-        export SMTP_SERVER=$(cat /run/configs/smtp_server)
-        export SMTP_USERNAME=$(cat /run/configs/smtp_user)
-        export SMTP_PASSWORD=$(cat /run/configs/smtp_password)
-        export SERVER_HOSTNAME=$(cat /run/configs/server_hostname)
+        export SMTP_SERVER=$(cat /run/configs/smtp_server_config)
+        export SMTP_USERNAME=$(cat /run/configs/smtp_user_config)
+        export SMTP_PASSWORD=$(cat /run/configs/smtp_password_secret)
+        export SERVER_HOSTNAME=$(cat /run/configs/server_hostname_config)
         exec postfix start
 
 configs:
@@ -55,6 +57,8 @@ configs:
   smtp_user_config:
     external: true
   server_hostname_config:
+    external: true
+  smtp_password_secret:
     external: true
 
 networks:
