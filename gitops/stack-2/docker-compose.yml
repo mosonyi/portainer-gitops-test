@@ -25,6 +25,7 @@ services:
       - SMTP_SERVER=/run/secrets/smtp_server_config
       - SMTP_USERNAME=/run/secrets/smtp_user_config
       - SERVER_HOSTNAME=/run/secrets/server_hostname_config
+      - SMTP_PASSWORD=/run/secrets/smtp_password_secret
       - LOG_SUBJECT=true
     configs:
       - source: smtp_server_config
@@ -33,6 +34,8 @@ services:
         target: /run/secrets/smtp_user_config
       - source: server_hostname_config
         target: /run/secrets/server_hostname_config
+    secrets:
+      - smtp_password_secret
 
 configs:
   to_email_config:
