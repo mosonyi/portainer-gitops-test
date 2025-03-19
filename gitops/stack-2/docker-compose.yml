@@ -7,12 +7,17 @@ services:
     restart: always
     networks:
      - portainer-network
+    entrypoint:
+      - "/bin/sh"
+      - "-c"
+      - |
+        export TO_EMAIL=$(cat /run/configs/to_email_config)
+        /entrypoint.sh
     environment:
-     - TO_EMAIL=/run/secrets/to_email_config
      - NODENAME=node2
     configs:
       - source: to_email_config
-        target: /run/secrets/to_email_config
+        target: /run/configs/to_email_config
     deploy:
       replicas: 1
 
@@ -22,20 +27,25 @@ services:
     networks:
      - portainer-network
     environment:
-      - SMTP_SERVER=/run/secrets/smtp_server_config
-      - SMTP_USERNAME=/run/secrets/smtp_user_config
-      - SERVER_HOSTNAME=/run/secrets/server_hostname_config
-      - SMTP_PASSWORD=/run/secrets/smtp_password_secret
       - LOG_SUBJECT=true
     configs:
       - source: smtp_server_config
-        target: /run/secrets/smtp_server_config
+        target: /run/configs/smtp_server_config
       - source: smtp_user_config
-        target: /run/secrets/smtp_user_config
+        target: /run/configs/smtp_user_config
       - source: server_hostname_config
-        target: /run/secrets/server_hostname_config
+        target: /run/configs/server_hostname_config
     secrets:
       - smtp_password_secret
+    entrypoint:
+      - "/bin/sh"
+      - "-c"
+      - |
+        export SMTP_SERVER=$(cat /run/configs/smtp_server)
+        export SMTP_USERNAME=$(cat /run/configs/smtp_user)
+        export SMTP_PASSWORD=$(cat /run/configs/smtp_password)
+        export SERVER_HOSTNAME=$(cat /run/configs/server_hostname)
+        exec postfix start
 
 configs:
   to_email_config:
