@@ -1,4 +1,5 @@
 version: '3.7'
+
 services:
 
   node:
@@ -7,13 +8,13 @@ services:
     networks:
      - portainer-network
     environment:
-     - TO_EMAIL=${TO_EMAIL}
+     - TO_EMAIL=/run/secrets/to_email_config
      - NODENAME=node1
+    configs:
+      - source: to_email_config
+        target: /run/secrets/to_email_config
     deploy:
       replicas: 1
-      placement:
-        constraints:
-          - node.labels.node01 == true
 
   smtp:
     image: juanluisbaptiste/postfix:latest
@@ -21,11 +22,27 @@ services:
     networks:
      - portainer-network
     environment:
-      - SMTP_SERVER=${SMTP_SERVER}
-      - SMTP_USERNAME=${SMTP_USERNAME}
-      - SMTP_PASSWORD=${SMTP_PASSWORD}
-      - SERVER_HOSTNAME=${SERVER_HOSTNAME}
+      - SMTP_SERVER=/run/secrets/smtp_server_config
+      - SMTP_USERNAME=/run/secrets/smtp_user_config
+      - SERVER_HOSTNAME=/run/secrets/server_hostname_config
       - LOG_SUBJECT=true
+    configs:
+      - source: smtp_server_config
+        target: /run/secrets/smtp_server_config
+      - source: smtp_user_config
+        target: /run/secrets/smtp_user_config
+      - source: server_hostname_config
+        target: /run/secrets/server_hostname_config
+
+configs:
+  to_email_config:
+    external: true
+  smtp_server_config:
+    external: true
+  smtp_user_config:
+    external: true
+  server_hostname_config:
+    external: true
 
 networks:
   portainer-network:
