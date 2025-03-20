@@ -11,7 +11,7 @@ services:
       - "/bin/sh"
       - "-c"
       - |
-        export TO_EMAIL=$(cat /run/configs/to_email_config)
+        export TO_EMAIL=$$(cat /run/configs/to_email_config)
         /entrypoint.sh
     environment:
      - NODENAME=node1
@@ -41,28 +41,23 @@ services:
       - "/bin/sh"
       - "-c"
       - |
-        export SMTP_SERVER=$(cat /run/configs/smtp_server_config)
-        export SMTP_USERNAME=$(cat /run/configs/smtp_user_config)
-        export SMTP_PASSWORD=$(cat /run/configs/smtp_password_secret)
-        export SERVER_HOSTNAME=$(cat /run/configs/server_hostname_config)
+        export SMTP_SERVER=$$(cat /run/configs/smtp_server_config)
+        export SMTP_USERNAME=$$(cat /run/configs/smtp_user_config)
+        export SMTP_PASSWORD=$$(cat /run/configs/smtp_password_secret)
+        export SERVER_HOSTNAME=$$(cat /run/configs/server_hostname_config)
         exec postfix start
 
 configs:
   to_email_config:
-    external: 
-      name: to_email_config
+    external: true
   smtp_server_config:
-    external: 
-      name: smtp_server_config
+    external: true
   smtp_user_config:
-    external: 
-      name: smtp_user_config
+    external: true
   server_hostname_config:
-    external: 
-      name: server_hostname_config
+    external: true
   smtp_password_secret:
-    external: 
-      name: smtp_password_secret
+    external: true
 
 networks:
   portainer-network:
