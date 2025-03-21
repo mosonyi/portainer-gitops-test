@@ -47,8 +47,7 @@ services:
         export SMTP_USERNAME=$$(cat /run/configs/smtp_user_config)
         export SMTP_PASSWORD=$$(cat /run/configs/smtp_password_secret)
         export SERVER_HOSTNAME=$$(cat /run/configs/server_hostname_config)
-        exec postfix start
-
+        exec /run.sh
 configs:
   test_config:
     file: ./test.conf

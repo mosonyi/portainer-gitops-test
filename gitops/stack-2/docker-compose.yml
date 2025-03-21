@@ -6,7 +6,7 @@ services:
     image: mosonyi/portainer-gitops-test:dev
     restart: always
     networks:
-     - portainer-network
+      - portainer-network
     entrypoint:
       - "/bin/sh"
       - "-c"
@@ -14,7 +14,7 @@ services:
         export TO_EMAIL=$$(cat /run/configs/to_email_config)
         /entrypoint.sh
     environment:
-     - NODENAME=node2
+      - NODENAME=node2
     configs:
       - source: to_email_config
         target: /run/configs/to_email_config
@@ -25,7 +25,7 @@ services:
     image: juanluisbaptiste/postfix:latest
     restart: always
     networks:
-     - portainer-network
+      - portainer-network
     environment:
       - LOG_SUBJECT=true
     configs:
@@ -45,7 +45,7 @@ services:
         export SMTP_USERNAME=$$(cat /run/configs/smtp_user_config)
         export SMTP_PASSWORD=$$(cat /run/configs/smtp_password_secret)
         export SERVER_HOSTNAME=$$(cat /run/configs/server_hostname_config)
-        exec postfix start
+        exec /run.sh
 
 configs:
   to_email_config:
