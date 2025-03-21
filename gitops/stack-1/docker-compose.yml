@@ -37,7 +37,7 @@ services:
         target: /run/configs/server_hostname_config
       - source: smtp_password_secret
         target: /run/configs/smtp_password_secret
-      - source: test.conf
+      - source: test_config
         target: /run/configs/test.conf
     entrypoint:
       - "/bin/sh"
