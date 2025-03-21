@@ -37,8 +37,8 @@ services:
         target: /run/configs/server_hostname_config
       - source: smtp_password_secret
         target: /run/configs/smtp_password_secret
-      - source: test.conf
-        target: /run/configs/test.conf
+      # - source: test.conf
+      #   target: /run/configs/test.conf
     entrypoint:
       - "/bin/sh"
       - "-c"
@@ -50,8 +50,8 @@ services:
         exec postfix start
 
 configs:
-  test_config:
-    file: ./test.conf
+  # test_config:
+  #   file: ./test.conf
   to_email_config:
     external: true
   smtp_server_config:
