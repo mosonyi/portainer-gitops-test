@@ -62,6 +62,7 @@ configs:
     external: true
   smtp_password_secret:
     external: true
+    
 
 networks:
   portainer-network:
